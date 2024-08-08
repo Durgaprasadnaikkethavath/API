@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cricket Data</title>
+  </head>
+  <style>
+    h1 {
+      color: white;
+      background-color: green;
+      padding: 20px;
+      text-align: center;
+    }
+    #cricket_container {
+      background-image: url("https://cms-article.forbesindia.com/media/images/2023/Oct/img_220741_cricket.jpg");
+      background-size: cover;
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+      padding: 20px;
+      text-align: center;
+    }
+    .cricketStyle {
+      background-color: rgba(0, 0, 0, 0.8);
+      width: 150px;
+      height: 250px;
+      border: 1px solid rgb(255, 255, 255);
+      color: white;
+    }
+  </style>
+  <body>
+    <h1>Men's Cricket Ranking Card</h1>
+    <div id="cricket_container"></div>
+
+    <script>
+      fetch("http://localhost:3200/mensCricket")
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+
+          const cricket_container =
+            document.getElementById("cricket_container");
+
+          data.forEach((player) => {
+            const data_div = document.createElement("div");
+
+            data_div.classList.add("cricketStyle");
+
+            data_div.innerHTML = `
+        <p>${player.name}</p>
+        <p>${player.ranking}</p>
+        <p>${player.runs}</p>
+        <p>${player.balls}</p>
+        <p>${player.fours}</p>
+        <p>${player.opposition}</p>
+        `;
+            cricket_container.appendChild(data_div);
+          });
+        });
+    </script>
+  </body>
+</html>
